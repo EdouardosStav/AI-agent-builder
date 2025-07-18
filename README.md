@@ -1,73 +1,302 @@
-# Welcome to your Lovable project
+# AI Agent Builder
 
-## Project info
+A powerful visual pipeline builder for creating multi-step AI workflows. Design, test, and deploy custom AI pipelines with an intuitive drag-and-drop interface.
 
-**URL**: https://lovable.dev/projects/b18b4ffa-2d2b-4371-a2c6-f7cc3a3b0a37
+![AI Agent Builder](https://img.shields.io/badge/AI-Pipeline_Builder-blue)
+![React](https://img.shields.io/badge/React-18.3.1-61dafb)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue)
+![Supabase](https://img.shields.io/badge/Supabase-Database-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## How can I edit this code?
+## Overview
 
-There are several ways of editing your application.
+AI Agent Builder allows users to create sophisticated AI pipelines without coding. Chain together multiple AI operations like summarization, translation, rewriting, and extraction to process text through multiple transformation steps.
 
-**Use Lovable**
+### Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b18b4ffa-2d2b-4371-a2c6-f7cc3a3b0a37) and start prompting.
+- **Visual Pipeline Builder**: Intuitive drag-and-drop interface for creating workflows
+- **Multiple AI Operations**:
+  - **Summarize**: Create concise summaries (short/medium/long, bullet points/paragraph)
+  - **Translate**: Support for 8+ languages (French, Spanish, German, Italian, Portuguese, Dutch, Chinese, Japanese)
+  - **Rewrite**: Transform tone (casual, formal, professional, friendly)
+  - **Extract**: Pull out keywords, entities, or both
+- **AI Assistant**: Natural language to pipeline generation - just describe what you want
+- **Workflow Management**: Save, load, and manage multiple pipelines
+- **Real-time Execution**: See step-by-step results with streaming output
+- **User Authentication**: Secure login and personal workspace
+- **Modern UI**: Beautiful, responsive design with Tailwind CSS and shadcn/ui
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+### Frontend
+- **React 18.3.1** with TypeScript
+- **Vite** - Lightning fast build tool
+- **Tailwind CSS** + **shadcn/ui** - Modern, accessible UI components
+- **@dnd-kit** - Drag and drop functionality
+- **TanStack Query** - Server state management
+- **React Router v7** - Client-side routing
+- **Framer Motion** - Smooth animations
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Backend & Infrastructure
+- **Supabase**:
+  - PostgreSQL database
+  - Authentication
+  - Edge Functions (Deno)
+- **Prisma ORM** - Type-safe database access
+- **Vercel AI SDK** - AI model integration
+- **OpenAI GPT-4** - AI processing
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Development
+- **TypeScript** - Type safety
+- **ESLint** - Code linting
+- **PostCSS** - CSS processing
 
-Follow these steps:
+## Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Node.js 18+ and npm/pnpm
+- Supabase account
+- OpenAI API key
+- Git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Installation & Setup
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 1. Clone the Repository
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+git clone https://github.com/EdouardosStav/AI-agent-builder.git
+cd AI-agent-builder
 ```
 
-**Edit a file directly in GitHub**
+### 2. Install Dependencies
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm install
+# or
+pnpm install
+```
 
-**Use GitHub Codespaces**
+### 3. Environment Configuration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Create a `.env` file in the root directory:
 
-## What technologies are used for this project?
+```env
+# Supabase Configuration
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
 
-This project is built with:
+# Database URLs (from Supabase dashboard)
+DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@aws-0-region.pooler.supabase.com:6543/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://postgres:[YOUR-PASSWORD]@aws-0-region.pooler.supabase.com:5432/postgres"
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# OpenAI API Key
+OPENAI_API_KEY=sk-...your-openai-key
+```
 
-## How can I deploy this project?
+### 4. Database Setup
 
-Simply open [Lovable](https://lovable.dev/projects/b18b4ffa-2d2b-4371-a2c6-f7cc3a3b0a37) and click on Share -> Publish.
+```bash
+# Generate Prisma client
+npx prisma generate
 
-## Can I connect a custom domain to my Lovable project?
+# Push schema to database
+npx prisma db push
 
-Yes, you can!
+# (Optional) Seed initial data
+npx prisma db seed
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 5. Supabase Edge Functions Setup
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+# Login to Supabase CLI
+npx supabase login
+
+# Link your project
+npx supabase link --project-ref your-project-ref
+
+# Deploy edge functions
+npx supabase functions deploy execute-pipeline-step
+npx supabase functions deploy generate-pipeline
+
+# Set secrets
+npx supabase secrets set OPENAI_API_KEY=your-openai-key
+```
+
+### 6. Run Development Server
+
+```bash
+npm run dev
+# or
+pnpm dev
+```
+
+Visit `http://localhost:5173` to see the application.
+
+## Usage Guide
+
+### Creating a Pipeline
+
+1. **Start Building**: Click "New Pipeline" or use the AI Assistant
+2. **Add Steps**: Drag AI operation blocks from the sidebar
+3. **Configure**: Click on each step to set parameters
+4. **Connect**: Steps automatically connect in sequence
+5. **Test**: Enter sample text and click "Execute Pipeline"
+6. **Save**: Name your workflow and save for later use
+
+### Using the AI Assistant
+
+1. Navigate to the AI Assistant page
+2. Describe your goal in natural language:
+   - "Make this content professional and translate to Spanish"
+   - "Summarize this text and extract key points"
+3. The AI will generate an appropriate pipeline
+4. Click "Use This Pipeline" to load it in the builder
+
+### Managing Workflows
+
+- **My Workflows**: View all saved pipelines
+- **Edit**: Click on any workflow to modify
+- **Delete**: Remove unwanted workflows
+- **Share**: (Coming soon) Share workflows with others
+
+## Project Structure
+
+```
+ai-agent-builder/
+├── src/
+│   ├── components/     # React components
+│   │   ├── pipeline/   # Pipeline builder components
+│   │   ├── ui/        # shadcn/ui components
+│   │   └── layout/    # Layout components
+│   ├── contexts/      # React contexts (Auth, etc)
+│   ├── hooks/         # Custom React hooks
+│   ├── pages/         # Page components
+│   ├── types/         # TypeScript types
+│   ├── lib/           # Utilities
+│   └── integrations/  # External service integrations
+├── prisma/
+│   └── schema.prisma  # Database schema
+├── supabase/
+│   └── functions/     # Edge functions
+├── public/            # Static assets
+└── [config files]     # Various configuration files
+```
+
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+
+# Set environment variables in Vercel dashboard
+```
+
+### Deploy to Netlify
+
+```bash
+# Build
+npm run build
+
+# Deploy dist folder to Netlify
+# Add environment variables in Netlify dashboard
+```
+
+### Manual Deployment
+
+```bash
+# Build for production
+npm run build
+
+# Serve dist folder with any static host
+```
+
+## Configuration
+
+### Supabase Configuration
+
+1. Enable Email authentication in Supabase dashboard
+2. Configure OAuth providers if needed
+3. Set up Row Level Security (RLS) policies
+4. Configure CORS for edge functions
+
+### Database Schema
+
+The project uses Prisma with the following main models:
+- **User**: Authentication and profile
+- **Workflow**: Saved pipeline configurations
+- **WorkflowStep**: Individual steps in pipelines (JSON)
+
+## What's Implemented
+
+- [x] Drag-and-drop pipeline builder
+- [x] All 4 AI operation types (summarize, translate, rewrite, extract)
+- [x] Step configuration UI
+- [x] Pipeline execution with OpenAI
+- [x] User authentication (Supabase)
+- [x] Save/load workflows
+- [x] AI Assistant for natural language pipeline generation
+- [x] Responsive design
+- [x] Real-time streaming responses
+- [x] Error handling and validation
+- [x] Modern UI with animations
+
+## What's Missing / TODO
+
+### Core Features
+- [ ] **Public workflow sharing** - Schema supports it, needs UI implementation
+- [ ] **Workflow templates** - Pre-built pipeline examples
+- [ ] **Collaborative editing** - Real-time multi-user support
+- [ ] **Version history** - Track workflow changes
+- [ ] **Export/Import** - Download/upload workflow definitions
+
+### Technical Improvements
+- [ ] **Comprehensive test suite** - Unit and integration tests
+- [ ] **Error boundaries** - Better error recovery
+- [ ] **Performance optimization** - Code splitting, lazy loading
+- [ ] **Offline support** - PWA capabilities
+- [ ] **API rate limiting** - Protect against abuse
+- [ ] **Webhook support** - Trigger pipelines via API
+
+### UI/UX Enhancements
+- [ ] **Dark mode** - Theme switching
+- [ ] **Keyboard shortcuts** - Power user features
+- [ ] **Mobile optimization** - Better touch support
+- [ ] **Onboarding flow** - First-time user experience
+- [ ] **Analytics dashboard** - Usage statistics
+
+### AI Features
+- [ ] **More AI models** - Claude, Gemini support
+- [ ] **Custom prompts** - User-defined operations
+- [ ] **Batch processing** - Process multiple inputs
+- [ ] **Conditional logic** - If/then branching
+- [ ] **External integrations** - Connect to other services
+
+## Known Issues
+
+1. **Streaming responses** may not work in some browsers
+2. **Large text inputs** can hit API limits
+3. **Drag preview** sometimes glitches on Firefox
+4. **Mobile drag-and-drop** needs improvement
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built as part of an AI workflow challenge
+- Inspired by node-based programming interfaces
+- Thanks to the open-source community for the amazing tools
+- Special thanks to Anthropic, OpenAI, and Supabase teams
+
+## Contact & Support
+
+- **Author**: Edouardos Stav
+- **GitHub**: [@EdouardosStav](https://github.com/EdouardosStav)
+
+---
