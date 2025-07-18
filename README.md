@@ -182,30 +182,6 @@ ai-agent-builder/
 └── [config files]     # Various configuration files
 ```
 
-## Deployment
-
-### Deploy to Vercel (Recommended)
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Set environment variables in Vercel dashboard
-```
-
-### Deploy to Netlify
-
-```bash
-# Build
-npm run build
-
-# Deploy dist folder to Netlify
-# Add environment variables in Netlify dashboard
-```
-
 ### Manual Deployment
 
 ```bash
